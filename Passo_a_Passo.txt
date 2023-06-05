@@ -1,0 +1,19 @@
+Tenha o Node JS intalado
+
+1° para iniciar o projeto vá np VS Code e Digite npm init -y
+
+2° crie o banco de dados no MySQL
+Estrutura do banco de dados
+
+create database todolist;
+use todolist;
+
+CREATE TABLE tasks (
+  id INT AUTO_INCREMENT,
+  task VARCHAR(255),
+  completed BOOLEAN,
+  PRIMARY KEY (id)
+);
+
+3° baixe as dependencias
+Digite: npm i body-parser ejs express mysql

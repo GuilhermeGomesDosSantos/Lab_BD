@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo List</title>
+    <style>
+        #todo-list {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ToDo List</h1>
+
+    <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Nova tarefa">
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <div id="todo-list"></div>
+
+    <script>
+        // Array para armazenar as tarefas
+        let tasks = [];
+
+        // Elementos do formulário
+        const todoForm = document.getElementById('todo-form');
+        const todoInput = document.getElementById('todo-input');
+
+        // Elemento onde as tarefas serão exibidas
+        const todoList = document.getElementById('todo-list');
+
+        // Função para atualizar a exibição da lista
+        function updateList() {
+            todoList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const taskItem = document.createElement('div');
+                taskItem.innerHTML = `
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask(${index})">
+                    <span>${task.description}</span>
+                    <button onclick="editTask(${index})">Editar</button>
+                    <button onclick="deleteTask(${index})">Excluir</button>
+                `;
+                todoList.appendChild(taskItem);
+            });
+        }
+
+        // Função para adicionar uma nova tarefa
+        function addTask(event) {
+            event.preventDefault();
+
+            const description = todoInput.value.trim();
+
+            if (description !== '') {
+                tasks.push({
+                    description,
+                    completed: false
+                });
+
+                todoInput.value = '';
+
+                updateList();
+            }
+        }
+
+        // Função para marcar/desmarcar uma tarefa como concluída
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            updateList();
+        }
+
+        // Função para editar uma tarefa
+        function editTask(index) {
+            const newDescription = prompt('Digite a nova descrição:');
+            if (newDescription !== null && newDescription.trim() !== '') {
+                tasks[index].description = newDescription.trim();
+                updateList();
+            }
+        }
+
+        // Função para excluir uma tarefa
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            updateList();
+        }
+
+        // Event listener para adicionar uma nova tarefa ao formulário
+        todoForm.addEventListener('submit', addTask);
+    </script>
+</body>
+</html>
